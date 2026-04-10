@@ -4,7 +4,7 @@
   "description": "🛒 Mini E-commerce Backend API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "dev": "npx nodemon src/server.js",
     "start": "node src/server.js"
   },
@@ -16,6 +16,9 @@
   "author": "",
   "license": "ISC",
   "type": "module",
+  "jest": {
+  "testEnvironment": "node"
+},
   "bugs": {
     "url": "https://github.com/Chetan2005-code/Ecommerce-backend/issues"
   },
@@ -25,7 +28,10 @@
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.4.1",
     "express": "^5.2.1",
+    "express-validator": "^7.3.2",
+    "jest": "^30.3.0",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.4.1"
+    "mongoose": "^9.4.1",
+    "supertest": "^7.2.2"
   }
 }
