@@ -1,10 +1,17 @@
 import cartModel from "../models/cart.model.js";
-
+import productModel from "../models/product.model.js";
 export const addToCart = async (req,res) => {
     try {
         
     const userId = req.user._id; // get logged-in user's ID from auth middleware to link cart with correct user
     const { productId, name, price, quantity } = req.body; // extract product ID and quantity sent by client to add/update item in cart
+
+     // ✅ fetch product from DB to get name & price
+    const product = await productModel.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }  
+
 
     let cart = await cartModel.findOne({user:userId});
 
@@ -22,7 +29,12 @@ export const addToCart = async (req,res) => {
     if (itemIndex > -1) {
       cart.items[itemIndex].quantity += quantity;
     } else {
-      cart.items.push({ product: productId,name,price, quantity });
+       cart.items.push({
+        product: productId,
+        name: product.name,   // ✅ from DB
+        price: product.price, // ✅ from DB
+        quantity,
+      });
     }
 
     // 🔥 ADD HERE
